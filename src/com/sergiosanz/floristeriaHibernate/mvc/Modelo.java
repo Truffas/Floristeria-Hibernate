@@ -43,7 +43,10 @@ public class Modelo {
         sessionFactory = configuracion.buildSessionFactory(ssr);
     }
 
-
+    /***
+     * Devuelve los clientes disponibles
+     * @return lista de clientes
+     */
     ArrayList<Cliente> getClientes() {
         Session sesion = sessionFactory.openSession();
         Query query = sesion.createQuery("FROM Cliente");
@@ -52,6 +55,10 @@ public class Modelo {
         return lista;
     }
 
+    /***
+     * Devuelve los pedidos disponibles
+     * @return lista de pedidos
+     */
     ArrayList<Pedido> getPedidos() {
         Session sesion = sessionFactory.openSession();
         Query query = sesion.createQuery("FROM Pedido");
@@ -60,6 +67,10 @@ public class Modelo {
         return lista;
     }
 
+    /***
+     * Devuelve los adornos disponibles
+     * @return lista de adornos
+     */
     ArrayList<Adorno> getAdornos() {
         Session sesion = sessionFactory.openSession();
         Query query = sesion.createQuery("FROM Adorno");
@@ -68,6 +79,10 @@ public class Modelo {
         return lista;
     }
 
+    /***
+     * Devuelve los detalles disponibles
+     * @return lista de detalles
+     */
     ArrayList<DetallePedido> getDetalles() {
         Session sesion = sessionFactory.openSession();
         Query query = sesion.createQuery("FROM DetallePedido");
@@ -76,6 +91,11 @@ public class Modelo {
         return lista;
     }
 
+    /***
+     * Devuelve los pedidos que tienen un cliente
+     * @param cliente editorial
+     * @return lista de pedidos
+     */
     ArrayList<Pedido> getPedidosCliente(Cliente cliente) {
         Session sesion = sessionFactory.openSession();
         Query query = sesion.createQuery("FROM Pedido WHERE cliente = :cli");
@@ -85,6 +105,11 @@ public class Modelo {
         return lista;
     }
 
+    /***
+     * Devuelve los detalles que tiene un pedido
+     * @param pedido pedido
+     * @return lista de detalles
+     */
     ArrayList<DetallePedido> getDetallesPedido(Pedido pedido) {
         Session sesion = sessionFactory.openSession();
         Query query = sesion.createQuery("FROM DetallePedido WHERE pedido = :ped");
@@ -94,6 +119,12 @@ public class Modelo {
         return lista;
     }
 
+
+    /***
+     * Devuelve los detalles de un pedido que tiene un adorno
+     * @param adorno adorno
+     * @return lista de detalles
+     */
     ArrayList<DetallePedido> getDetallesAdorno(Adorno adorno) {
         Session sesion = sessionFactory.openSession();
         Query query = sesion.createQuery("FROM DetallePedido WHERE adorno = :a");
@@ -122,7 +153,12 @@ public class Modelo {
         return lista.get(0);
     }
 
+    /***
+     * Insertar un objeto en la BBDD
+     * @param o objeto a insertar en la BBDD
+     */
     void insertar(Object o) {
+        //Obtengo una session a partir de la factoria de sesiones
         Session sesion = sessionFactory.openSession();
         sesion.beginTransaction();
         sesion.save(o);
@@ -130,6 +166,11 @@ public class Modelo {
         sesion.close();
     }
 
+
+    /***
+     * Modificar un objeto de la BBDD
+     * @param o objeto a modificar en la BBDD
+     */
     void modificar(Object o) {
         Session sesion = sessionFactory.openSession();
         sesion.beginTransaction();
@@ -138,6 +179,11 @@ public class Modelo {
         sesion.close();
     }
 
+
+    /***
+     * Eliminar un objeto de la BBDD
+     * @param o objeto a eliminar en la BBDD
+     */
     void eliminar(Object o) {
         Session sesion = sessionFactory.openSession();
         sesion.beginTransaction();

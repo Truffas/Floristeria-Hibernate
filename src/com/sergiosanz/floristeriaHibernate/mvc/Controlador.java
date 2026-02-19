@@ -47,7 +47,7 @@ public class Controlador implements ActionListener, ListSelectionListener {
                 conectado = true;
                 break;
 
-            // ===== CLIENTES =====
+            // CLIENTES
             case "altaClienteBtn": {
                 Cliente c = new Cliente();
                 c.setNombre(vista.txtNombre.getText());
@@ -66,7 +66,6 @@ public class Controlador implements ActionListener, ListSelectionListener {
             case "modificarClienteBtn": {
                 Cliente c = (Cliente) vista.listClientes.getSelectedValue();
                 if (c == null) break;
-
                 c.setNombre(vista.txtNombre.getText());
                 c.setApellidos(vista.txtApellidos.getText());
                 c.setEmail(vista.txtEmail.getText());
@@ -86,7 +85,7 @@ public class Controlador implements ActionListener, ListSelectionListener {
                 Cliente c = (Cliente) vista.listClientes.getSelectedValue();
                 if (c == null) break;
 
-                // No borramos si tiene pedidos (simple)
+                // No borramos si tiene pedidos
                 if (!modelo.getPedidosCliente(c).isEmpty()) {
                     JOptionPane.showMessageDialog(null,
                             "No puedes borrar el cliente porque tiene pedidos.\nBorra antes sus pedidos.",
@@ -98,7 +97,7 @@ public class Controlador implements ActionListener, ListSelectionListener {
                 break;
             }
 
-            // ===== PEDIDOS =====
+            // PEDIDOS
             case "altaPedidoBtn": {
                 Pedido p = new Pedido();
 
@@ -107,8 +106,8 @@ public class Controlador implements ActionListener, ListSelectionListener {
                 }
 
                 double total = 0;
-                if (!vista.txtTotal.getText().trim().isEmpty()) {
-                    total = Double.parseDouble(vista.txtTotal.getText().trim());
+                if (!vista.txtTotal.getText().isEmpty()) {
+                    total = Double.parseDouble(vista.txtTotal.getText());
                 }
                 p.setTotal(total);
 
@@ -130,8 +129,8 @@ public class Controlador implements ActionListener, ListSelectionListener {
                 }
 
                 double total = 0;
-                if (!vista.txtTotal.getText().trim().isEmpty()) {
-                    total = Double.parseDouble(vista.txtTotal.getText().trim());
+                if (!vista.txtTotal.getText().isEmpty()) {
+                    total = Double.parseDouble(vista.txtTotal.getText());
                 }
                 p.setTotal(total);
 
@@ -146,7 +145,7 @@ public class Controlador implements ActionListener, ListSelectionListener {
                 Pedido p = (Pedido) vista.listPedidos.getSelectedValue();
                 if (p == null) break;
 
-                // Borrar antes sus detalles para no dejar huérfanos
+                // Borramos antes sus detalles para no dejar datos huerfanos
                 ArrayList<DetallePedido> detalles = modelo.getDetallesPedido(p);
                 for (DetallePedido d : detalles) {
                     modelo.eliminar(d);
@@ -156,19 +155,19 @@ public class Controlador implements ActionListener, ListSelectionListener {
                 break;
             }
 
-            // ===== DETALLES =====
+            // DETALLES
             case "altaDetallesBtn": {
                 DetallePedido d = new DetallePedido();
 
                 int cant = 0;
-                if (!vista.txtCantidad.getText().trim().isEmpty()) {
-                    cant = Integer.parseInt(vista.txtCantidad.getText().trim());
+                if (!vista.txtCantidad.getText().isEmpty()) {
+                    cant = Integer.parseInt(vista.txtCantidad.getText());
                 }
                 d.setCantidad(cant);
 
                 double precio = 0;
-                if (!vista.txtPrecioDetalle.getText().trim().isEmpty()) {
-                    precio = Double.parseDouble(vista.txtPrecioDetalle.getText().trim());
+                if (!vista.txtPrecioDetalle.getText().isEmpty()) {
+                    precio = Double.parseDouble(vista.txtPrecioDetalle.getText());
                 }
                 d.setPrecio(precio);
 
@@ -184,14 +183,14 @@ public class Controlador implements ActionListener, ListSelectionListener {
                 if (d == null) break;
 
                 int cant = 0;
-                if (!vista.txtCantidad.getText().trim().isEmpty()) {
-                    cant = Integer.parseInt(vista.txtCantidad.getText().trim());
+                if (!vista.txtCantidad.getText().isEmpty()) {
+                    cant = Integer.parseInt(vista.txtCantidad.getText());
                 }
                 d.setCantidad(cant);
 
                 double precio = 0;
-                if (!vista.txtPrecioDetalle.getText().trim().isEmpty()) {
-                    precio = Double.parseDouble(vista.txtPrecioDetalle.getText().trim());
+                if (!vista.txtPrecioDetalle.getText().isEmpty()) {
+                    precio = Double.parseDouble(vista.txtPrecioDetalle.getText());
                 }
                 d.setPrecio(precio);
 
