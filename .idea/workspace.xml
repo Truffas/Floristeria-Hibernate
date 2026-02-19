@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="972bd7bf-d3e5-47bd-bcdc-46248d0e22af" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/sergiosanz/floristeriaHibernate/mvc/Controlador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sergiosanz/floristeriaHibernate/mvc/Controlador.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sergiosanz/floristeriaHibernate/mvc/Modelo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sergiosanz/floristeriaHibernate/mvc/Modelo.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -103,7 +101,7 @@
       <workItem from="1771343556430" duration="12338000" />
       <workItem from="1771429054108" duration="1300000" />
       <workItem from="1771435708390" duration="3878000" />
-      <workItem from="1771521832747" duration="1407000" />
+      <workItem from="1771521832747" duration="5073000" />
     </task>
     <servers />
   </component>

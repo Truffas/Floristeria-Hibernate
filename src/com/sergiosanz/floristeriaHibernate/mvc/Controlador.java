@@ -209,31 +209,31 @@ public class Controlador implements ActionListener, ListSelectionListener {
                 break;
             }
 
-            // ===== ADORNOS =====
+            // ADORNOS
             case "altaAdornoBtn": {
                 Adorno a = new Adorno();
                 a.setTipo(vista.txtTipo.getText());
                 a.setDescripcion(vista.txtDescripcion.getText());
 
                 double precio = 0;
-                if (!vista.txtPrecioAdorno.getText().trim().isEmpty()) {
-                    precio = Double.parseDouble(vista.txtPrecioAdorno.getText().trim());
+                if (!vista.txtPrecioAdorno.getText().isEmpty()) {
+                    precio = Double.parseDouble(vista.txtPrecioAdorno.getText());
                 }
                 a.setPrecio(precio);
 
                 int stock = 0;
-                if (!vista.txtStock.getText().trim().isEmpty()) {
-                    stock = Integer.parseInt(vista.txtStock.getText().trim());
+                if (!vista.txtStock.getText().isEmpty()) {
+                    stock = Integer.parseInt(vista.txtStock.getText());
                 }
                 a.setStock(stock);
 
-                // Para no meter Categoria/Proveedor en la vista, ponemos la primera que exista
+                // En la aplicación no damos opciones a elegir Categoría, ni proveedor, metemos el primero de la bd
                 Categoria cat = modelo.getPrimeraCategoria();
                 Proveedor pro = modelo.getPrimerProveedor();
 
                 if (cat == null || pro == null) {
                     JOptionPane.showMessageDialog(null,
-                            "Para dar de alta un adorno necesitas al menos 1 categoría y 1 proveedor en la BBDD.",
+                            "Para dar de alta un adorno necesitas al menos 1 categoría y 1 proveedor en la BD.",
                             "Error", JOptionPane.ERROR_MESSAGE);
                     break;
                 }
@@ -253,14 +253,14 @@ public class Controlador implements ActionListener, ListSelectionListener {
                 a.setDescripcion(vista.txtDescripcion.getText());
 
                 double precio = 0;
-                if (!vista.txtPrecioAdorno.getText().trim().isEmpty()) {
-                    precio = Double.parseDouble(vista.txtPrecioAdorno.getText().trim());
+                if (!vista.txtPrecioAdorno.getText().isEmpty()) {
+                    precio = Double.parseDouble(vista.txtPrecioAdorno.getText());
                 }
                 a.setPrecio(precio);
 
                 int stock = 0;
-                if (!vista.txtStock.getText().trim().isEmpty()) {
-                    stock = Integer.parseInt(vista.txtStock.getText().trim());
+                if (!vista.txtStock.getText().isEmpty()) {
+                    stock = Integer.parseInt(vista.txtStock.getText());
                 }
                 a.setStock(stock);
 
@@ -272,7 +272,7 @@ public class Controlador implements ActionListener, ListSelectionListener {
                 Adorno a = (Adorno) vista.listAdornos.getSelectedValue();
                 if (a == null) break;
 
-                // Borrar antes detalles relacionados
+                // Borramos antes detalles relacionados
                 ArrayList<DetallePedido> dets = modelo.getDetallesAdorno(a);
                 for (DetallePedido d : dets) {
                     modelo.eliminar(d);
@@ -291,7 +291,7 @@ public class Controlador implements ActionListener, ListSelectionListener {
         vista.conexionItem.addActionListener(listener);
         vista.salirItem.addActionListener(listener);
 
-        // ActionCommands simples (como hace tu profe con strings)
+        // ActionCommands
         vista.altaClienteButton.setActionCommand("altaClienteBtn");
         vista.modificarClienteButton.setActionCommand("modificarClienteBtn");
         vista.borrarClienteButton.setActionCommand("borrarClienteBtn");
@@ -325,6 +325,7 @@ public class Controlador implements ActionListener, ListSelectionListener {
         vista.borrarAdornoButton.addActionListener(listener);
     }
 
+    //Añadir los listeners de las listas
     private void addListSelectionListener(ListSelectionListener listener) {
         vista.listClientes.addListSelectionListener(listener);
         vista.listPedidos.addListSelectionListener(listener);
@@ -337,20 +338,21 @@ public class Controlador implements ActionListener, ListSelectionListener {
         listarPedidos(modelo.getPedidos());
         listarAdornos(modelo.getAdornos());
 
-        // Detalles: si hay pedido seleccionado -> muestro sus detalles, si no -> muestro todos
-        Pedido pSel = (Pedido) vista.listPedidos.getSelectedValue();
-        if (pSel != null) {
-            listarDetalles(modelo.getDetallesPedido(pSel));
+        // Si hay pedido seleccionado, muestro sus detalles, si no, muestro todos
+        Pedido pedido = (Pedido) vista.listPedidos.getSelectedValue();
+        if (pedido != null) {
+            listarDetalles(modelo.getDetallesPedido(pedido));
         } else {
             listarDetalles(modelo.getDetalles());
         }
 
         // Tabla pedidos del cliente seleccionado
-        Cliente cSel = (Cliente) vista.listClientes.getSelectedValue();
-        if (cSel != null) {
-            cargarTablaPedidosCliente(modelo.getPedidosCliente(cSel));
+        Cliente cliente = (Cliente) vista.listClientes.getSelectedValue();
+        if (cliente != null) {
+            cargarTablaPedidosCliente(modelo.getPedidosCliente(cliente));
         } else {
             cargarTablaPedidosCliente(new ArrayList<>());
+            // cargarTablaPedidosCliente espera una lista, por eso le meto una vacía
         }
     }
 
@@ -400,14 +402,18 @@ public class Controlador implements ActionListener, ListSelectionListener {
         vista.comboAdorno.setSelectedIndex(-1);
     }
 
+    // Metodo para rellenar la tabla con los pedidos del cliente seleccionado
     private void cargarTablaPedidosCliente(ArrayList<Pedido> pedidos) {
+        // Vaciamos la tabla, borro todas las filas
         vista.dtmPedidosCliente.setRowCount(0);
+        // Recorremos los pedidos del cliente seleccionado
         for (Pedido p : pedidos) {
-            vista.dtmPedidosCliente.addRow(new Object[]{
-                    p.getId(),
-                    p.getFechaCreacion(),
-                    p.getTotal()
-            });
+            // Creamos una fila, le pasamos un array tipo object
+            Object[] fila = new Object[3];
+            fila[0] = p.getId();
+            fila[1] = p.getFechaCreacion();
+            fila[2] = p.getTotal();
+            vista.dtmPedidosCliente.addRow(fila);
         }
     }
 
@@ -470,7 +476,7 @@ public class Controlador implements ActionListener, ListSelectionListener {
                     vista.txtTotal.setText(String.valueOf(p.getTotal()));
                     vista.comboCliente.setSelectedItem(p.getCliente());
 
-                    // Al seleccionar pedido -> cargo detalles de ese pedido
+                    // Al seleccionar pedido, cargo detalles de ese pedido
                     listarDetalles(modelo.getDetallesPedido(p));
                     vista.comboPedido.setSelectedItem(p);
                 }
